@@ -1,0 +1,40 @@
+﻿@page "/links"
+
+<PageTitle>Links</PageTitle>
+
+<h1>Links </h1>
+
+<ul>
+    @foreach (var link in links)
+    {
+        <li>
+            <input type="checkbox" @bind="link.Viewed" />
+            <input @bind=link.Subject />
+            <a href="@link.LinkURL"> @link.LinkURL</a>
+
+        </li>
+    }
+</ul>
+
+<button @onclick="AddLink">Add link </button>
+
+<input placeholder="Subject" @bind=newSubject>
+<input placeholder="Link" @bind=newLink>
+
+@code {
+    List<LinkItem> links = new();
+    private string? newSubject;
+    private string? newLink;
+
+    private void AddLink()
+    {
+        if (!string.IsNullOrWhiteSpace(newSubject) && !string.IsNullOrWhiteSpace(newLink))
+        {
+            links.Add(new LinkItem(
+                newSubject,
+                newLink,
+                false
+            ));
+        }
+    }
+}
